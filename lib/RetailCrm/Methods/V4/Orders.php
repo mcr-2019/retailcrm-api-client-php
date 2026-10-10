@@ -89,6 +89,22 @@ trait Orders
         );
     }
 
+    public function productCreate(array $params, $site = null)
+    {
+        if (!count($params)) {
+            throw new \InvalidArgumentException(
+                'Parameter `order` must contains a data'
+            );
+        }
+
+        /* @noinspection PhpUndefinedMethodInspection */
+        return $this->client->makeRequest(
+            '/store/products/batch/create',
+            "POST",
+            $this->fillSite($site, ['products' => json_encode($params)])
+        );
+    }
+
     /**
      * Save order IDs' (id and externalId) association into CRM
      *
